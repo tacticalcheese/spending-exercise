@@ -3,6 +3,7 @@ from rest_framework import viewsets
 from .models import Spending
 from spendings.serializers import SpendingSerializers
 
+
 class SpendingViewSet(viewsets.ModelViewSet):
     serializer_class = SpendingSerializers
     queryset  = Spending.objects.all()
