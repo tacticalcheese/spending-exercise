@@ -3,12 +3,13 @@ import { InputStyles } from '../styles/InputStyles';
 import { SelectStyles } from '../styles/SelectStyles';
 import { FormStyles } from '../styles/ComponentStyles';
 
-export default function Form() {
+export default function Form({refresh, refreshList}) {
   const [state, setState] = useState({
     description: '',
     amount: 0,
     currency: 'USD',
   });
+  const [error, setError] = useState(false);
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -19,9 +20,40 @@ export default function Form() {
     });
   }
 
+  function handleSubmit(e) {
+    e.preventDefault();
+    const body = {
+      description: e.target.description.value,
+      amount: parseInt(e.target.amount.value),
+      currency: e.target.currency.value
+    }
+
+    fetch(`/spendings/`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body)
+    })
+      .then(async (res) => {
+        const body = await res.json();
+        return {
+          status: res.status,
+          body,
+        };
+      })
+      .then((response) => {
+        if (response.status === 201) {
+          refreshList(refresh + 1);
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        setError(true);
+      })
+  }
+
   return (
     <>
-      <FormStyles>
+      <FormStyles onSubmit={handleSubmit}>
         <InputStyles
           type='text'
           placeholder='description'
@@ -44,7 +76,7 @@ export default function Form() {
           <option value='HUF'>HUF</option>
           <option value='USD'>USD</option>
         </SelectStyles>
-        <InputStyles type='submit' value='Save' />
+        <InputStyles type='submit' value='Save'/>
       </FormStyles>
     </>
   );
