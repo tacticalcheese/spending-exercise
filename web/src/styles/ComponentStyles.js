@@ -27,10 +27,10 @@ export const CurrencyButton = styled.button`
   font-size: 20px;
   cursor: pointer;
   background-color: ${(p) =>
-    p.name === p.currencyFilter ? '#d1e7fb' : 'var(--color-white)'};
+    p.value === p.currencyFilter ? '#d1e7fb' : 'var(--color-white)'};
   color: ${(p) =>
-    p.name === p.currencyFilter ? 'var(--color-blue)' : 'inherit'};
-  font-weight: ${(p) => (p.name === p.currencyFilter ? '700' : '400')};
+    p.value === p.currencyFilter ? 'var(--color-blue)' : 'inherit'};
+  font-weight: ${(p) => (p.value === p.currencyFilter ? '700' : '400')};
   border-radius: 8px;
   padding: 6px 12px;
   /* box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
@@ -64,7 +64,6 @@ export const FormStyles = styled.form`
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
-  margin-bottom: 4rem;
 `;
 
 export const HeaderStyles = styled.header`

@@ -8,7 +8,7 @@ class SpendingViewSet(viewsets.ModelViewSet):
     queryset  = Spending.objects.all()
 
     def get_queryset(self):
-        response = self.queryset
+        response = self.queryset.all()
         currency = self.request.query_params.get('currency')
         order_by = self.request.query_params.get('orderBy')
         if currency:

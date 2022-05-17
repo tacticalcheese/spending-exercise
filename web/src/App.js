@@ -6,15 +6,24 @@ import Layout from './components/Layout';
 
 export default function App() {
   const [spendings, setSpendings] = useState([]);
+  const [refresh, refreshList] = useState(0);
+  const [filters, setFilters] = useState('/?orderBy=-spent_at');
 
   return (
     <>
       <Layout>
-        <Form />
-        <FiltersAndOrderings />
+        <Form
+          refresh={refresh}
+          refreshList={refreshList}
+        />
+        <FiltersAndOrderings
+          setFilters={setFilters}
+        />
         <SpendingList
           spendings={spendings}
           setSpendings={setSpendings}
+          refresh={refresh}
+          filters={filters}
         />
       </Layout>
     </>
