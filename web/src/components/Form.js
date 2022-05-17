@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { InputStyles } from '../styles/InputStyles';
 import { SelectStyles } from '../styles/SelectStyles';
 import { FormStyles } from '../styles/ComponentStyles';
+import { ErrorStyles } from '../styles/ErrorStyles';
+
 
 export default function Form({refresh, refreshList}) {
   const [state, setState] = useState({
@@ -9,7 +11,7 @@ export default function Form({refresh, refreshList}) {
     amount: 0,
     currency: 'USD',
   });
-  const [error, setError] = useState(false);
+  const [error, setError] = useState('')
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -18,37 +20,62 @@ export default function Form({refresh, refreshList}) {
       ...state,
       [name]: value,
     });
+    if (state.description !== '' && state.amount !== 0 && state.amount !== '') {
+      setError('');
+    }
+  }
+
+  function validateForm() {
+    if (state.description !== '' && state.amount !== 0 && state.amount !== '') {
+      setError('');
+      return true;
+    } else {
+      errorHandling();
+    }
+  }
+
+  function errorHandling() {
+    if (state.description === '' && (state.amount === 0 || state.amount === '')) {
+      setError('Please give a description and an amount!');
+    } else if (state.amount === 0 || state.amount === '') {
+      setError('Please give an amount other than zero!');
+    } else if (!error.descValid) {
+      setError('Please give a description!');
+    }
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    const body = {
-      description: e.target.description.value,
-      amount: parseFloat(e.target.amount.value),
-      currency: e.target.currency.value
-    }
+    const values = e.target
+    if (validateForm()) {
+      console.log(validateForm(values))
+      const body = {
+        description: values.description.value,
+        amount: parseFloat(values.amount.value).toFixed(2),
+        currency: values.currency.value
+      }
 
-    fetch(`/spendings/`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body)
-    })
-      .then(async (res) => {
-        const body = await res.json();
-        return {
-          status: res.status,
-          body,
-        };
+      fetch(`/spendings/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
       })
-      .then((response) => {
-        if (response.status === 201) {
-          refreshList(refresh + 1);
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-        setError(true);
-      })
+        .then(async (res) => {
+          const body = await res.json();
+          return {
+            status: res.status,
+            body,
+          };
+        })
+        .then((response) => {
+          if (response.status === 201) {
+            refreshList(refresh + 1);
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+        })
+    }
   }
 
   return (
@@ -78,6 +105,7 @@ export default function Form({refresh, refreshList}) {
         </SelectStyles>
         <InputStyles type='submit' value='Save'/>
       </FormStyles>
+      <ErrorStyles>{error}</ErrorStyles>
     </>
   );
 }
