@@ -24,7 +24,7 @@ export default function Form({refresh, refreshList}) {
     e.preventDefault();
     const body = {
       description: e.target.description.value,
-      amount: parseInt(e.target.amount.value),
+      amount: parseFloat(e.target.amount.value),
       currency: e.target.currency.value
     }
 

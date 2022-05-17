@@ -11,13 +11,13 @@ import {
   AmountWrapper,
 } from "../styles/ComponentStyles";
 
-export default function SpendingList({ spendings, setSpendings, refresh }) {
+export default function SpendingList({ spendings, setSpendings, refresh, filters }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
   useEffect(() => {
     setLoading(true);
-    fetch(`/spendings`, {
+    fetch(`/spendings${filters}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     })
@@ -40,7 +40,7 @@ export default function SpendingList({ spendings, setSpendings, refresh }) {
       .finally(() => {
         setLoading(false);
       });
-  }, [refresh]);
+  }, [refresh, filters]);
 
   if (loading) return <Loader />;
 
@@ -76,7 +76,7 @@ export default function SpendingList({ spendings, setSpendings, refresh }) {
             </TextWrapper>
             <AmountWrapper>
               <Amount currency={spending.currency}>
-                {(spending.amount / 100).toFixed(2)}
+                {spending.amount}
               </Amount>
             </AmountWrapper>
           </Spending>
