@@ -99,10 +99,10 @@ Run the python tests:
 cd python/app && python manage.py test
 ```
 
-Run the API (http://localhost:5000):
+Run the API (http://localhost:8000):
 
 ```shell
-cd python/app && python manage.py runserver 5000
+cd python/app && python manage.py runserver
 ```
 
 

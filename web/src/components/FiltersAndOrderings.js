@@ -38,8 +38,8 @@ export default function CurrencyFilter({setFilters}) {
           <select onChange={handleOrdering}>
             <option value='-spent_at'>Sort by Date descending (default)</option>
             <option value='spent_at'>Sort by Date ascending</option>
-            <option value='-amount'>Sort by Amount descending</option>
-            <option value='amount'>Sort by Amount ascending</option>
+            <option value='-amount_normalized'>Sort by Amount descending</option>
+            <option value='amount_normalized'>Sort by Amount ascending</option>
           </select>
         </Orderings>
         <CurrencyFilters onClick={handleCurrency}>
