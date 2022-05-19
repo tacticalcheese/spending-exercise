@@ -11,7 +11,7 @@ export default function Form({refresh, refreshList}) {
     amount: 0,
     currency: 'USD',
   });
-  const [error, setError] = useState('')
+  const [error, setError] = useState('');
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -46,15 +46,12 @@ export default function Form({refresh, refreshList}) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    const values = e.target
     if (validateForm()) {
-      console.log(validateForm(values))
       const body = {
-        description: values.description.value,
-        amount: parseFloat(values.amount.value).toFixed(2),
-        currency: values.currency.value
+        description: state.description,
+        amount: parseFloat(state.amount).toFixed(2),
+        currency: state.currency
       }
-
       fetch(`/spendings/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

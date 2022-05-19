@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import '@testing-library/jest-dom';
+import { screen, fireEvent } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import CurrencyFilter from '../components/FiltersAndOrderings';
-import '@testing-library/jest-dom'
-import { screen, fireEvent } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
 
 let container = null;
 beforeEach(() => {
@@ -39,5 +39,5 @@ it('handles currency filtering', () => {
   const currencyButton = screen.getByRole('button', { name: 'HUF' });
   fireEvent.click(currencyButton);
   expect(setFiltersMock).toHaveBeenCalledTimes(1);
-  expect(setFiltersMock).toHaveBeenCalledWith('/?currency=HUF&orderBy=-spent_at')
+  expect(setFiltersMock).toHaveBeenCalledWith('/?currency=HUF&orderBy=-spent_at');
 });
