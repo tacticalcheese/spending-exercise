@@ -96,34 +96,15 @@ cd python && pip install -r requirements.txt
 Run the python tests:
 
 ```shell
-cd python && pytest tests.py
+cd python/app && python manage.py test
 ```
 
 Run the API (http://localhost:5000):
 
 ```shell
-cd python && FLASK_APP=app python -m flask run
+cd python/app && python manage.py runserver 5000
 ```
 
-### Option #2: Run the Node/Express API
-
-This project is best run using **Node 14.17.x**.
-
-```shell
-cd node && npm i
-```
-
-Run the node tests:
-
-```shell
-cd node && npm test
-```
-
-Run the API (http://localhost:5000):
-
-```shell
-cd node && npm start
-```
 
 ### Both: Run the JS/React Web Client
 
