@@ -66,6 +66,7 @@ export default function Form({refresh, refreshList}) {
         })
         .then((response) => {
           if (response.status === 201) {
+            setState({description: '', amount: 0,});
             refreshList(refresh + 1);
           }
         })
