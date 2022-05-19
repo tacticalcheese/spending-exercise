@@ -17,6 +17,7 @@ export default function App() {
           refreshList={refreshList}
         />
         <FiltersAndOrderings
+          filters={filters}
           setFilters={setFilters}
         />
         <SpendingList
