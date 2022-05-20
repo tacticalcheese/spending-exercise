@@ -10,13 +10,13 @@ import {
   Amount,
   AmountWrapper,
 } from "../styles/ComponentStyles";
+import '../styles/SpendingList.css';
 
-export default function SpendingList({ spendings, setSpendings, refresh, filters, refreshList }) {
+export default function SpendingListBackend({ spendings, setSpendings, refresh, filters, refreshList }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    console.log('Backend called')
     setLoading(true);
     fetch(`/spendings${filters}`, {
       method: "GET",
@@ -48,7 +48,9 @@ export default function SpendingList({ spendings, setSpendings, refresh, filters
 
   return (
     <>
-      <div>I am backend</div>
+      <div className="infobox">
+        <span className="info">Filtering and ordering done on the server side.</span>
+      </div>
       {error && (
         <ErrorMessage>
           The server is probably down. Please try again later.

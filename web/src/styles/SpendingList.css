@@ -1,0 +1,18 @@
+.info {
+    font-size: 17px;
+    text-transform: uppercase;
+    transform: rotate(-2deg)
+               skew(-2deg);
+    background-color: #2ad7a3;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    padding: 5px;
+}
+
+.infobox {
+    height: 11vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }

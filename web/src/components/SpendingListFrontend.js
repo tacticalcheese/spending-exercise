@@ -10,6 +10,7 @@ import {
   Amount,
   AmountWrapper,
 } from "../styles/ComponentStyles";
+import '../styles/SpendingList.css';
 
 export default function SpendingListFrontend({ spendings, setSpendings, refresh, filters, refreshList}) {
   const [loading, setLoading] = useState(true);
@@ -17,7 +18,6 @@ export default function SpendingListFrontend({ spendings, setSpendings, refresh,
   const [modifiedList, setModifiedList] = useState([]);
 
   useEffect(() => {
-    console.log('Frontend called')
     setLoading(true);
     fetch('/spendings', {
       method: "GET",
@@ -74,7 +74,9 @@ export default function SpendingListFrontend({ spendings, setSpendings, refresh,
 
   return (
     <>
-        <div>I am frontend</div>
+        <div className="infobox">
+            <span className="info">Filtering and ordering done on the client side.</span>
+        </div>      
       {error && (
         <ErrorMessage>
           The server is probably down. Please try again later.

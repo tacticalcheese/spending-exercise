@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import Form from './components/Form';
 import FiltersAndOrderings from './components/FiltersAndOrderings';
-import SpendingList from './components/SpendingList';
 import Layout from './components/Layout';
-import SpendingListFrontend from './components/SpendingListFrontend'
+import SpendingListFrontend from './components/SpendingListFrontend';
+import SpendingListBackend from './components/SpendingListBackend';
 
 export default function App() {
   const [spendings, setSpendings] = useState([]);
@@ -34,7 +34,7 @@ export default function App() {
           />
         )}
         {!filterSwitch && (
-          <SpendingList
+          <SpendingListBackend
           spendings={spendings}
           setSpendings={setSpendings}
           refresh={refresh}
