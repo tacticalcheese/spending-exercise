@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import SpendingList from '../components/SpendingList';
+import SpendingListBackend from '../components/SpendingListBackend';
 
 let container = null;
 
@@ -16,5 +16,5 @@ afterEach(() => {
 });
 
 it('renders without crashing', () => {
-  ReactDOM.render(<SpendingList />, container);
+  ReactDOM.render(<SpendingListBackend />, container);
 });
