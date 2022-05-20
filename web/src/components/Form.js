@@ -45,6 +45,7 @@ export default function Form({refresh, refreshList}) {
   }
 
   function handleSubmit(e) {
+    console.log(1, state);
     e.preventDefault();
     if (validateForm()) {
       const body = {
@@ -66,8 +67,9 @@ export default function Form({refresh, refreshList}) {
         })
         .then((response) => {
           if (response.status === 201) {
-            setState({description: '', amount: 0,});
-            refreshList(refresh + 1);
+            setState({description: '', amount: 0, currency: state.currency});
+            refreshList(true);
+            console.log(2, state);
           }
         })
         .catch((err) => {

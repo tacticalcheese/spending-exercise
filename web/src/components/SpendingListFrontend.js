@@ -11,14 +11,15 @@ import {
   AmountWrapper,
 } from "../styles/ComponentStyles";
 
-export default function SpendingList({ spendings, setSpendings, refresh, filters, refreshList }) {
+export default function SpendingListFrontend({ spendings, setSpendings, refresh, filters, refreshList}) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [modifiedList, setModifiedList] = useState([]);
 
   useEffect(() => {
-    console.log('Backend called')
+    console.log('Frontend called')
     setLoading(true);
-    fetch(`/spendings${filters}`, {
+    fetch('/spendings', {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     })
@@ -32,6 +33,7 @@ export default function SpendingList({ spendings, setSpendings, refresh, filters
       .then((response) => {
         if (response.status === 200) {
           setSpendings(response.body);
+          setModifiedList(manipulateList(response.body));
         }
       })
       .catch((err) => {
@@ -42,19 +44,43 @@ export default function SpendingList({ spendings, setSpendings, refresh, filters
         setLoading(false);
         refreshList(false);
       });
-  }, [refresh, filters]);
+  }, [refresh]);
+  
+  useEffect(() => {
+      if (!loading) {
+        setModifiedList(manipulateList(spendings));
+      }
+  }, [filters]);
+
+  function manipulateList(list) {
+    const splittedFilters = filters.split(/[=&]/);
+    
+    const orderingField= splittedFilters[1].replace('-', '');
+    const currencyField = splittedFilters[3];
+
+    const orderedList = list.sort((a, b) => { 
+      if (orderingField === 'spent_at') {
+        return splittedFilters[1].includes('-') ? new Date(b[orderingField]) - new Date(a[orderingField]) : new Date(a[orderingField]) - new Date(b[orderingField]);
+      } else {
+        return splittedFilters[1].includes('-') ? b[orderingField]-a[orderingField] : a[orderingField]-b[orderingField];
+      }
+     });
+    if (currencyField) {
+      return orderedList.filter((element) => { return element.currency === currencyField});
+    } else { return orderedList}
+  }
 
   if (loading) return <Loader />;
 
   return (
     <>
-      <div>I am backend</div>
+        <div>I am frontend</div>
       {error && (
         <ErrorMessage>
           The server is probably down. Please try again later.
         </ErrorMessage>
       )}
-      {!spendings.length && !error && (
+      {!modifiedList.length && !error && (
         <h1 style={{ textAlign: "center", marginTop: "4rem" }}>
           Yay!{" "}
           <span role="img" aria-label="jsx-a11y/accessible-emoji">
@@ -63,8 +89,8 @@ export default function SpendingList({ spendings, setSpendings, refresh, filters
           No spendings!
         </h1>
       )}
-      {spendings.length > 0 &&
-        spendings.map((spending) => (
+      {modifiedList.length > 0 &&
+        modifiedList.map((spending) => (
           <Spending key={spending.id}>
             <IconWrapper>
               <FiDollarSign color="var(--color-blue)" />

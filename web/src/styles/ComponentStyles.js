@@ -235,3 +235,9 @@ export const ErrorMessage = styled.h1`
   border-radius: 8px;
   max-width: 80%;
 `;
+
+export const FilterSwitchWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding-left: 5px;
+`;
