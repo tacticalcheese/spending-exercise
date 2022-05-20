@@ -39,5 +39,5 @@ it('handles currency filtering', () => {
   const currencyButton = screen.getByRole('button', { name: 'HUF' });
   fireEvent.click(currencyButton);
   expect(setFiltersMock).toHaveBeenCalledTimes(1);
-  expect(setFiltersMock).toHaveBeenCalledWith('/?currency=HUF&orderBy=-spent_at');
+  expect(setFiltersMock).toHaveBeenCalledWith('/?orderBy=-spent_at&currency=HUF');
 });
