@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const FiltersWrapper = styled.div`
   display: flex;
-  margin-bottom: 2rem;
 
 @media (max-width: 756px) {
   flex-direction: column;
@@ -234,4 +233,10 @@ export const ErrorMessage = styled.h1`
   padding: 10px 15px;
   border-radius: 8px;
   max-width: 80%;
+`;
+
+export const FilterSwitchWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding-left: 5px;
 `;

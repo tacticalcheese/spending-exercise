@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 
-import { FiltersWrapper, Orderings, CurrencyFilters, CurrencyButton } from '../styles/ComponentStyles';
+import { FiltersWrapper, Orderings, CurrencyFilters, CurrencyButton, FilterSwitchWrapper } from '../styles/ComponentStyles';
+import '../styles/ToggleSwitch.css';
 
-export default function CurrencyFilter({setFilters}) {
+export default function CurrencyFilter({setFilters, filterSwitch, setFilterSwitch}) {
   const [currency, setCurrency] = useState('');
   const [ordering, setOrdering] = useState('-spent_at');
 
@@ -23,16 +24,28 @@ export default function CurrencyFilter({setFilters}) {
       if (currency === '') {
         setFilters(`/?orderBy=${e.target.value}`);
       } else {
-        setFilters(`/?currency=${currency}&orderBy=${e.target.value}`);
+        setFilters(`/?orderBy=${e.target.value}&currency=${currency}`);
       }
     }
     if (e.type === 'click') {
-      setFilters(`/?currency=${e.target.value}&orderBy=${ordering}`);
+      console.log(1, `/?orderBy=${ordering}&currency=${e.target.value}`)
+      setFilters(`/?orderBy=${ordering}&currency=${e.target.value}`);
     }
+  }
+
+  function handleSwitch() {
+    setFilterSwitch(!filterSwitch)
   }
 
   return (
     <>
+      <FilterSwitchWrapper>
+        <p className='label'>Switch to frontend filtering</p>
+        <label className='switch'>
+          <input type='checkbox' onChange={handleSwitch}/>
+          <span className='slider'></span>
+        </label>
+      </FilterSwitchWrapper>
       <FiltersWrapper>
         <Orderings>
           <select onChange={handleOrdering}>

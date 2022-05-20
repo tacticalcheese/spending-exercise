@@ -67,7 +67,7 @@ export default function Form({refresh, refreshList}) {
         .then((response) => {
           if (response.status === 201) {
             setState({description: '', amount: 0, currency: state.currency});
-            refreshList(refresh + 1);
+            refreshList(true);
           }
         })
         .catch((err) => {
